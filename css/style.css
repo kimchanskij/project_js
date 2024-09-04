@@ -1,0 +1,145 @@
+.header {
+    display: flex;
+    height: 100px;
+    box-shadow: 0px 7px 5px -5px rgba(34, 60, 80, 0.6);
+}
+
+.header-title {
+    margin: auto;
+}
+
+.main {
+    width: 1000px;
+    margin: 50px auto;
+    min-height: 428px;
+}
+
+.article {
+    display: flex;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+img {
+    height: 200px;
+}
+
+.article-section-button {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.card-title {
+    font-size: 24px;
+}
+
+.footer {
+    display: flex;
+    background-color: silver;
+
+}
+
+.add {
+    margin: 25px auto;
+}
+
+.btn {
+    text-wrap: nowrap;
+}
+
+.description {}
+
+.mymodal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(14, 18, 22, 0.5);
+}
+
+.mymodal-body {
+    margin: auto;
+    background-color: #fff;
+    width: 600px;
+}
+
+.input-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.btn-close {
+    margin: 10px 0px 0px 10px;
+}
+
+.input {
+    margin: 10px 0px 0px 15px;
+}
+
+.input-group {
+    width: 570px;
+}
+
+span {
+    height: 30px;
+}
+
+.form-control {
+    height: 30px;
+}
+
+.textarea {
+    height: 70px;
+    max-height: 200px;
+}
+
+.picture {
+    font-size: 14px;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.modal-add {
+    margin-left: 15px;
+}
+
+.modal-card {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(14, 18, 22, 0.5);
+}
+
+.modal-card-body {
+    margin: auto;
+    background-color: #fff;
+    width: 600px;
+}
+
+.modal-card-info {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 10px 15px;
+}
+
+.modal-card-text {
+    padding-left: 20px;
+}
+
+.modal-card-img {
+    width: 180px;
+    height: 180px;
+}
