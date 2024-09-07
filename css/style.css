@@ -47,9 +47,13 @@ img {
     text-wrap: nowrap;
 }
 
-.description {}
+.edit {
+    display: block;
+    margin: 0px auto 10px auto;
+}
 
-.mymodal {
+.mymodal,
+.modal-editor {
     display: none;
     position: fixed;
     z-index: 1;
@@ -60,7 +64,8 @@ img {
     background-color: rgba(14, 18, 22, 0.5);
 }
 
-.mymodal-body {
+.mymodal-body,
+.modal-editor-body {
     margin: auto;
     background-color: #fff;
     width: 600px;
@@ -129,7 +134,7 @@ span {
 
 .modal-card-info {
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column;
     padding: 10px 15px;
 }
 

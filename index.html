@@ -21,6 +21,9 @@
     <footer class="footer">
         <button type="button" class="btn btn-primary add">Add new contact</button>
     </footer>
+    <div class="modal-edit">
+
+    </div>
     <div class="mymodal">
         <div class="mymodal-body">
             <button id="elem" type="button" class="btn-close" aria-label="Close"></button>
@@ -38,7 +41,7 @@
                         Name
                     </h2>
                     <div class="input-group mb-3">
-                        <input name='name' type="text" class="form-control" placeholder="Иван" aria-label="Username"
+                        <input name='name' type="text" class="form-control" required placeholder="Иван" aria-label="Username"
                             aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -57,7 +60,7 @@
                     </h2>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">+7</span>
-                        <input name='number' type="text" class="form-control" placeholder="(977)-754-12-77" aria-label="Username"
+                        <input name='number' type="text" class="form-control" required placeholder="(977)-754-12-77" aria-label="Username"
                             aria-describedby="basic-addon1">
                     </div>
                 </div>
@@ -66,7 +69,7 @@
                         Description
                     </label>
                     <div class="input-group mb-3">
-                        <textarea name='description' type="text" class="form-control textarea" aria-label="Username" aria-describedby="basic-addon1" placeholder="123">
+                        <textarea name='description' type="text" class="form-control textarea" aria-label="Username" aria-describedby="basic-addon1">
                         </textarea>
                     </div>
                     <div class="form-check">
@@ -81,7 +84,7 @@
                         Picture link
                     </h2>
                     <div class="input-group mb-3">
-                        <input name='picture_link' type="text" value="" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                        <input name='picture_link' type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -90,6 +93,78 @@
             </form>
         </div>
     </div>
+    <div class="modal-editor">
+        <div class="modal-editor-body" data-id="">
+            <button id="elem" type="button" class="btn-close close-editor" aria-label="Close"></button>
+            <form id="form-edit">
+                <div class="input">
+                    <h2 class="input-title">
+                        ID
+                    </h2>
+                    <div class="input-group mb-3">
+                        <input name='id' type="text" readonly class="form-control" aria-label="Username"
+                            aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="input">
+                    <h2 class="input-title">
+                        Name
+                    </h2>
+                    <div class="input-group mb-3">
+                        <input name='name' type="text" class="form-control" required placeholder="Иван"
+                            aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="input">
+                    <h2 class="input-title">
+                        Surname
+                    </h2>
+                    <div class="input-group mb-3">
+                        <input name='surname' type="text" class="form-control" placeholder="Иванов"
+                            aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="input">
+                    <h2 class="input-title">
+                        Number
+                    </h2>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">+7</span>
+                        <input name='number' type="text" class="form-control" required
+                            placeholder="(977)-754-12-77" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="input">
+                    <label for='description' class="input-title">
+                        Description
+                    </label>
+                    <div class="input-group mb-3">
+                        <textarea name='description' type="text" class="form-control textarea" 
+                            aria-label="Username" aria-describedby="basic-addon1">
+                            </textarea>
+                    </div>
+                    <div class="form-check">
+                        <input name='favorite' class="form-check-input" type="checkbox"
+                            id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Favorite
+                        </label>
+                    </div>
+                </div>
+                <div class="input">
+                    <h2 class="input-title picture">
+                        Picture link
+                    </h2>
+                    <div class="input-group mb-3">
+                        <input name='picture_link' type="text" class="form-control" 
+                            aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary apply">Apply</button>
+                </div>
+            </form>
+        </div>
     <script src="js/main.js"></script>
 </body>
 </html>
