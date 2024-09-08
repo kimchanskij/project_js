@@ -12,7 +12,9 @@ const $modal_editor = document.querySelector('.modal-editor');
 
 const array = [];
 
-let regexp = /(?:\+|\d)[\d\-\(\) ]{9,}\d/g;
+const regexpNumber = /^(\+7|[78])9\d{9}$/;
+
+const regexpName = /^([a-zа-я]{1,})$/
 
 function scrollBlock(isBlock) {
     if (isBlock) document.body.style.overflow = 'hidden';
@@ -57,14 +59,19 @@ document.querySelector('#form').addEventListener('submit', (event) => {
             alert('Контакт с данным ID уже существует!')
         }
         else {
-            if (!regexp.test(data.number)) {
-                alert('Номер телефона введен неверно!');
+            if (!regexpNumber.test(data.number)) {
+                alert('Поддерживаемые форматы: +79001014567, 79001014567, 89001014567');
             }
             else {
-                array.push(data);
-                document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(data));
-                scrollBlock(false);
-                $modal.style.display = 'none';
+                if ((data.name && !regexpName.test(data.name)) || (data.surname && !regexpName.test(data.surname))) {
+                    alert('Имя и фамилия должны состоять из букв!')
+                }
+                else {
+                    array.push(data);
+                    document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(data));
+                    scrollBlock(false);
+                    $modal.style.display = 'none';
+                }
             }
         }
     }
@@ -149,19 +156,29 @@ document.querySelector('#form-edit').addEventListener('submit', (event) => {
         data['favorite'] = false;
     }
 
-    const item = array.find(item => item.id === document.querySelector('.modal-editor-body').dataset.id);
-
-    for (let value in item) {
-        item[value] = data[value]
+    if (!regexpNumber.test(data.number)) {
+        alert('Поддерживаемые форматы: +79001014567, 79001014567, 89001014567');
     }
+    else {
+        if ((data.name && !regexpName.test(data.name)) || (data.surname && !regexpName.test(data.surname))) {
+            alert('Имя и фамилия должны состоять из букв!')
+        }
+        else {
+            const item = array.find(item => item.id === document.querySelector('.modal-editor-body').dataset.id);
 
-    const $card = document.querySelector(`.card-body[data-id='${data.id}']`);
-    $card.previousElementSibling.src = data['picture_link'];
-    $card.firstElementChild.innerHTML = `<h2 class='card-title'>${data.name}</h2>
+            for (let value in item) {
+                item[value] = data[value];
+            }
+
+            const $card = document.querySelector(`.card-body[data-id='${data.id}']`);
+            $card.previousElementSibling.src = data['picture_link'];
+            $card.firstElementChild.innerHTML = `<h2 class='card-title'>${data.name}</h2>
                                          <p class='card-number'>${data.number}</p>
                                          <p class='card-text'>${data.description}</p>`
-    scrollBlock(false);
-    $modal_editor.style.display = 'none';
+            scrollBlock(false);
+            $modal_editor.style.display = 'none';
+        }
+    }
 })
 
 const generateHTML = (object) => `
