@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'Quicksand';
-    src: url(/fonts/Quicksand-Light.ttf);
+    src: url(fonts/Quicksand-Light.ttf);
 }
 
 body {
-    background-image: url('/img/3.jpeg');
+    background-image: url('img/3.jpeg');
     font-family: 'Quicksand', sans-serif;
     background-size: cover;
 }
