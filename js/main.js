@@ -8,6 +8,8 @@ const $modal_body = document.querySelector('.mymodal-body');
 
 const array = [];
 
+let id = 1;
+
 $modal_close_button.addEventListener("click", () => {
     document.querySelector('.mymodal').style.display = "none";
 });
@@ -36,13 +38,18 @@ document.querySelector('#form').addEventListener('submit', (event) => {
         data['picture_link'] = picture;
     }
     let match = array.find(item => item.id == data.id)
-    if (match) {
-        alert('Контакт с данным ID уже существует!')
+    if (!isNaN(data.id)) {
+        if (match) {
+            alert('Контакт с данным ID уже существует!')
+        }
+        else {
+            array.push(data);
+            document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(data));
+            $modal.style.display = 'none';
+        }
     }
     else {
-        array.push(data);
-        document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(data));
-        $modal.style.display = 'none';
+        alert('ID в неверном формате!');
     }
 });
 
@@ -64,7 +71,7 @@ document.querySelector('.article').addEventListener('click', event => {
             }
         })
         array.splice(index, 1);
-        target.closest('.card').remove();
+        target.closest('.mycard').remove();
     }
 })
 
@@ -76,10 +83,13 @@ document.querySelector('.modal-edit').addEventListener('click', event => {
                 let i = 0;
                 document.querySelector('.modal-editor-body').dataset.id = item.id;
                 for (let val in item) {
-                    $element[i].value = item[val];
-                    i++;
+                    if (val == 'favorite') { $element[i].value = 'yes'; i++; }
+                    else {
+                        $element[i].value = item[val];
+                        i++;
+                    }
+
                 }
-                if (item['favorite'] == 'on') document.querySelector('.modal-editor [name="favorite"]').checked = true;
             }
         })
         event.target.closest('.modal-card').remove();
@@ -110,19 +120,23 @@ document.querySelector('#form-edit').addEventListener('submit', (event) => {
     })
     let $card = document.querySelector(`.card-body[data-id='${data.id}']`);
     $card.previousElementSibling.src = data['picture_link'];
-    $card.firstElementChild.innerHTML = data.name;
-    $card.children[1].innerHTML = `${data.number}<br>${data.description}</br>`
+    $card.firstElementChild.innerHTML = `<h2 class='card-title'>${data.name}</h2>
+                                    <p class='card-number'>${data.number}</p>
+                                    <p class='card-text'>${data.description}</p>`
     document.querySelector('.modal-editor').style.display = 'none';
 })
 
-const generateHTML = (object) => `<section class="card" style="width: 12rem;">
-    <img src = "${object.picture_link}" class="card-img" alt = "фото контакта">
+const generateHTML = (object) => `<section class="mycard">
+    <img src = "${object.picture_link}" class="card-img" alt = "Ой...">
         <div class="card-body" data-id="${object.id}">
-            <h2 class="card-title">${object.name}</h2>
-            <p class="card-text">${object.number}<br>${object.description}</br></p>
+            <div class='card-body-info'>
+                <h2 class="card-title">${object.name}</h2>
+                <p class="card-number">${object.number}</p>
+                <p class="card-text">${object.description}</p>
+            </div>
             <div class="article-section-button">
-                <button type="button" class="btn btn-primary open">Open card</button>
-                <button type="button" class="btn btn-danger delete">Delete</button>
+                <button type="button" class="open">Open card</button>
+                <button type="button" class="delete">Delete</button>
             </div>
         </div>
             </section > `;
@@ -130,17 +144,32 @@ const generateHTML = (object) => `<section class="card" style="width: 12rem;">
 const generateOpenCard = (object) => `<div class="modal-card">
         <div class="modal-card-body" data-id='${object.id}'>
             <button type="button" class='btn-close' aria-label="Close"></button>
+            <div class=modal-card-inner>
+                <div class=modal-card-img>
+                <img class='modal-card-img-inner' src='${object.picture_link}' alt='Ой...'>
+            </div>
             <div class="modal-card-info">
-                <img class='modal-card-img' src='${object.picture_link}'>
                 <p class='modal-card-text'>
-                    -ID: ${object.id}
-                    <br>-Name: ${object.name}</br>
-                    -Surname: ${object.surname}
-                    <br>-Number: ${object.number}</br>
-                    -Description: ${object.description}
-                    <br>-Favorite: ${object.favorite}</br>
-                    -Picture link: ${object.picture_link}
+                    ID: ${object.id}
                 </p>
+                <p class='modal-card-text'>
+                    Name: ${object.name}
+                </p>
+                <p class='modal-card-text'>
+                    Surname: ${object.surname}
+                </p>
+                <p class='modal-card-text'>
+                    Number: ${object.number}
+                </p>
+                <p class='modal-card-text'>
+                    Description: ${object.description}
+                </p>
+                <p class='modal-card-text'>
+                    Favorite: ${object.favorite}
+                </p>
+                <p class='modal-card-text'>
+                    Picture link: ${object.picture_link}
+            </div>
             </div>
             <button type="button" class="btn btn-primary edit">Edit</button>
         </div>
