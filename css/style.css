@@ -192,7 +192,7 @@ img {
 .mymodal,
 .modal-editor {
     display: none;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     width: 100%;
     height: 100%;
@@ -292,7 +292,7 @@ span {
 
 .modal-card {
     display: flex;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     width: 100%;
     height: 100%;

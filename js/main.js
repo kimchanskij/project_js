@@ -1,14 +1,16 @@
 const $modal_close_button = document.querySelector('.btn-close');
 
+const $editor_close_button = document.querySelector('.close-editor')
+
 const $add_button = document.querySelector('.add');
 
 const $modal = document.querySelector('.mymodal');
 
 const $modal_body = document.querySelector('.mymodal-body');
 
-const array = [];
+const $modal_editor = document.querySelector('.modal-editor');
 
-let id = 1;
+const array = [];
 
 $modal_close_button.addEventListener("click", () => {
     document.querySelector('.mymodal').style.display = "none";
@@ -100,17 +102,17 @@ document.querySelector('.modal-edit').addEventListener('click', event => {
             }
         })
         event.target.closest('.modal-card').remove();
-        document.querySelector('.modal-editor').style.display = 'flex';
+        $modal_editor.style.display = 'flex';
     }
 });
 
-document.querySelector('.close-editor').addEventListener('click', () => {
-    document.querySelector('.modal-editor').style.display = 'none';
+$editor_close_button.addEventListener('click', () => {
+    $modal_editor.style.display = 'none';
 })
 
-document.querySelector('.modal-editor').addEventListener('mousedown', (event) => {
+$modal_editor.addEventListener('mousedown', (event) => {
     if (event.target.closest('.modal-editor-body')) return;
-    document.querySelector('.modal-editor').style.display = 'none';
+    $modal_editor.style.display = 'none';
 })
 
 document.querySelector('#form-edit').addEventListener('submit', (event) => {
@@ -135,7 +137,7 @@ document.querySelector('#form-edit').addEventListener('submit', (event) => {
     $card.firstElementChild.innerHTML = `<h2 class='card-title'>${data.name}</h2>
                                     <p class='card-number'>${data.number}</p>
                                     <p class='card-text'>${data.description}</p>`
-    document.querySelector('.modal-editor').style.display = 'none';
+    $modal_editor.style.display = 'none';
 })
 
 const generateHTML = (object) => `<section class="mycard">
