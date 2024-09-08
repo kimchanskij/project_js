@@ -142,7 +142,7 @@ document.querySelector('#form-edit').addEventListener('submit', (event) => {
 })
 
 const generateHTML = (object) => `<section class="mycard">
-    <img src = "${object.picture_link}" class="card-img" alt = "Ой...">
+    <img src = "${object.picture_link}" class="card-img" alt = "">
         <div class="card-body" data-id="${object.id}">
             <div class='card-body-info'>
                 <h2 class="card-title">${object.name}</h2>
@@ -161,7 +161,7 @@ const generateOpenCard = (object) => `<div class="modal-card">
             <button type="button" class='btn-close' aria-label="Close"></button>
             <div class=modal-card-inner>
                 <div class=modal-card-img>
-                <img class='modal-card-img-inner' src='${object.picture_link}' alt='Ой...'>
+                <img class='modal-card-img-inner' src='${object.picture_link}' alt=''>
             </div>
             <div class="modal-card-info">
                 <p class='modal-card-text'>
