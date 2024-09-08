@@ -97,8 +97,9 @@ document.querySelector('.modal-edit').addEventListener('click', event => {
                         $element[i].value = item[val];
                         i++;
                     }
-
                 }
+                if (item['favorite'] === 'yes') $element[5].checked = true;
+                else $element[5].checked = false;
             }
         })
         event.target.closest('.modal-card').remove();
