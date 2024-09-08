@@ -12,6 +12,7 @@ body {
 input {
     font-family: 'Quicksand', sans-serif;
     font-weight: lighter;
+
 }
 
 .header {
@@ -217,7 +218,7 @@ img {
 .modal-editor-body {
     margin: auto;
     background-color: #fff;
-    width: 600px;
+    width: 500px;
     border: 0;
     border-radius: 3rem;
     background-image: linear-gradient(131deg, #82c4c5, #8ec2bf, #91d3d3, #abc5db);
@@ -237,7 +238,7 @@ img {
 }
 
 .input-group {
-    width: 570px;
+    padding-right: 15px;
 }
 
 span {
@@ -307,7 +308,6 @@ span {
 
 .modal-card-body {
     margin: auto;
-    width: 550px;
     border: 0;
     border-radius: 3rem;
     background-image: linear-gradient(131deg, #82c4c5, #88b2c2, #aadddd, #abc5db);
@@ -322,24 +322,42 @@ span {
     width: 300px;
     flex-direction: column;
     padding: 10px 15px;
+
+    @media (max-width: 500px) {
+        width: 220px;
+    }
 }
 
 .modal-card-text {
     word-break: break-all;
     width: 270px;
     padding-left: 20px;
+
+    @media (max-width: 500px) {
+        width: 200px;
+    }
 }
 
 .modal-card-img {
     margin-left: 35px;
-    width: 210px;
-    height: 210px;
+    width: 16vw;
+    height: 16vw;
     border-radius: 3rem;
     background-image: linear-gradient(131deg, #82c4c5, #88b2c2, #aadddd, #abc5db);
+
+    @media (max-width: 500px) {
+        width: 35vw;
+        height: 35vw;
+    }
 }
 
 .modal-card-img-inner {
     border-radius: 3rem;
-    width: 210px;
-    height: 210px;
+    width: 16vw;
+    height: 16vw;
+
+    @media (max-width: 500px) {
+        width: 35vw;
+        height: 35vw;
+    }
 }
