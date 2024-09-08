@@ -14,7 +14,7 @@ const array = [];
 
 const regexpNumber = /^(\+7|[78])9\d{9}$/;
 
-const regexpName = /^([a-zа-я]{1,})$/
+const regexpName = /^([a-zA-Zа-яА-Я]{1,})$/;
 
 function scrollBlock(isBlock) {
     if (isBlock) document.body.style.overflow = 'hidden';
@@ -64,6 +64,7 @@ document.querySelector('#form').addEventListener('submit', (event) => {
             }
             else {
                 if ((data.name && !regexpName.test(data.name)) || (data.surname && !regexpName.test(data.surname))) {
+                    console.log(data.name);
                     alert('Имя и фамилия должны состоять из букв!')
                 }
                 else {
