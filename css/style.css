@@ -6,7 +6,7 @@
 body {
     background-image: url(https://www.10bestdesign.com/blog/content/images/2021/04/simple-css-hover-effects-how-to-video-learn-css-animations.gif);
     font-family: 'Quicksand', sans-serif;
-    background-size: cover;
+    background-position: center;
 }
 
 input {

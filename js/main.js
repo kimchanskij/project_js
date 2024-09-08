@@ -59,9 +59,16 @@ document.querySelector('.article').addEventListener('click', event => {
             if (event.target.closest('.card-body').getAttribute('data-id') === item.id) document.querySelector('.modal-edit').insertAdjacentHTML('beforeend', generateOpenCard(item));
         })
         let $card_close_button = document.querySelector('.btn-close');
+        let $modal_card = document.querySelector('.modal-card');
+
         $card_close_button.addEventListener('click', (event) => {
-            document.querySelector('.modal-card').remove();
+            $modal_card.remove();
         })
+
+        $modal_card.addEventListener('mousedown', (event) => {
+            if (event.target.closest('.modal-card-body')) return;
+            $modal_card.remove();
+        });
     }
     if (event.target.matches('.delete')) {
         let target = event.target;
@@ -98,6 +105,11 @@ document.querySelector('.modal-edit').addEventListener('click', event => {
 });
 
 document.querySelector('.close-editor').addEventListener('click', () => {
+    document.querySelector('.modal-editor').style.display = 'none';
+})
+
+document.querySelector('.modal-editor').addEventListener('mousedown', (event) => {
+    if (event.target.closest('.modal-editor-body')) return;
     document.querySelector('.modal-editor').style.display = 'none';
 })
 
