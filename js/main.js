@@ -51,18 +51,35 @@ const postContact = async function (object) {
     }
 }
 
-// const deleteContact = async function (id) {
-//     try {
-//         const response = await (await fetch(URL + `/${id}`, {
-//             method: 'DELETE',
-//             headers: {
-//                 'Content-Type': 
-//             }
-//         }));
-//     } catch (error) {
-//         throw Error(error);
-//     }
-// }
+const deleteContact = async function (id) {
+    try {
+        const response = await fetch(URL + `/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            }
+        });
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
+const updateContact = async function (id, object) {
+    try {
+        const response = await fetch(URL + `/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(object)
+        });
+
+        return response;
+
+    } catch (error) {
+        throw Error(error);
+    }
+}
 
 getAllContacts().then(result => {
     if (result.length > 0) {
@@ -97,45 +114,23 @@ $modal.addEventListener('mousedown', (event) => {
 
 document.querySelector('#form').addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(event.target)
+    const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
 
-    if (document.querySelector('#form .form-check-input').checked) {
-        data['favourite'] = true;
+    data.avatar = 'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';
+
+    if ((data.name && !regexpName.test(data.name)) || (data.lastName && !regexpName.test(data.lastName))) {
+        alert('Имя и фамилия должны состоять из букв!')
     }
     else {
-        data['favourite'] = false;
+        postContact(data).then(() => {
+            getAllContacts().then(result => {
+                document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(result[0]));
+                scrollBlock(false);
+                $modal.style.display = 'none';
+            })
+        });
     }
-
-    const postData = getAllContacts().then(arr => {
-        const match = arr.find(elem => elem.id === data.id);
-        if (!isNaN(data.id)) {
-            if (match) {
-                alert('Контакт с данным ID уже существует!')
-            }
-            else {
-                if (!regexpNumber.test(data.phoneNumber)) {
-                    alert('Поддерживаемые форматы: +79001014567, 79001014567, 89001014567');
-                }
-                else {
-                    if ((data.name && !regexpName.test(data.name)) || (data.lastName && !regexpName.test(data.lastName))) {
-                        console.log(data.firstName);
-                        alert('Имя и фамилия должны состоять из букв!')
-                    }
-                    else {
-                        postContact(data).then(() => {
-                            document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(data));
-                            scrollBlock(false);
-                            $modal.style.display = 'none';
-                        });
-                    }
-                }
-            }
-        }
-        else {
-            alert('ID в неверном формате!');
-        }
-    });
 });
 
 document.querySelector('.article').addEventListener('click', event => {
@@ -163,31 +158,27 @@ document.querySelector('.article').addEventListener('click', event => {
     if (event.target.matches('.delete')) {
         let target = event.target;
 
-        const deleteCard = get
-        const index = array.findIndex((item) => {
-            if (item.id == target.closest('.card-body').dataset.id) {
-                return true;
-            }
+        const deleteCard = deleteContact(target.closest('.card-body').dataset.id).then(() => {
+            target.closest('.mycard').remove();
         })
-
-        array.splice(index, 1);
-        target.closest('.mycard').remove();
     }
 })
 
 document.querySelector('.modal-edit').addEventListener('click', event => {
     if (event.target.classList.contains('edit')) {
-        const item = array.find(item => item.id == event.target.closest('.modal-card-body').getAttribute('data-id'));
-        let $inputs = document.querySelectorAll('.modal-editor [name]');
+        const cardObj = getContact(document.querySelector('.modal-card-body').dataset.id);
+        cardObj.then(data => {
+            let $inputs = document.querySelectorAll('.modal-editor [name]');
 
-        $inputs.forEach(input => {
-            if (input.name === 'favourite') input.checked = item[input.name];
-            else input.value = item[input.name];
-        });
+            $inputs.forEach(input => {
+                if (input.name === 'favourite') input.checked = data[input.name]
+                else input.value = data[input.name];
+            });
 
-        document.querySelector('.modal-editor-body').dataset.id = item.id;
-        event.target.closest('.modal-card').remove();
-        $modal_editor.style.display = 'flex';
+            document.querySelector('.modal-editor-body').dataset.id = data.id;
+            event.target.closest('.modal-card').remove();
+            $modal_editor.style.display = 'flex';
+        })
     }
 });
 
@@ -223,19 +214,26 @@ document.querySelector('#form-edit').addEventListener('submit', (event) => {
             alert('Имя и фамилия должны состоять из букв!')
         }
         else {
-            const item = array.find(item => item.id === document.querySelector('.modal-editor-body').dataset.id);
 
-            for (let value in item) {
-                item[value] = data[value];
-            }
-
-            const $card = document.querySelector(`.card-body[data-id='${data.id}']`);
-            $card.previousElementSibling.src = data['picture_link'];
-            $card.firstElementChild.innerHTML = `<h2 class='card-title'>${data.firstName}</h2>
-                                         <p class='card-number'>${data.phoneNumber}</p>
-                                         <p class='card-text'>${data.description}</p>`
-            scrollBlock(false);
-            $modal_editor.style.display = 'none';
+            const $modal_body = document.querySelector('.modal-editor-body');
+            // const item = array.find(item => item.id === document.querySelector('.modal-editor-body').dataset.id);
+            getContact($modal_body.dataset.id).then(contact => {
+                for (let value in data) {
+                    if (data[value] == contact[value]) {
+                        delete data[value];
+                    }
+                }
+                console.log($modal_body.dataset.id, data);
+                updateContact($modal_body.dataset.id, data).then(() => {
+                    const $card = document.querySelector(`.card-body[data-id='${contact.id}']`);
+                    if (data['avatar']) $card.previousElementSibling.src = data['avatar'];
+                    $card.firstElementChild.innerHTML = `<h2 class='card-title'>${contact.firstName}</h2>
+                                         <p class='card-number'>${contact.phoneNumber}</p>
+                                         <p class='card-text'>${contact.description}</p>`
+                    scrollBlock(false);
+                    $modal_editor.style.display = 'none';
+                })
+            })
         }
     }
 })
@@ -246,15 +244,15 @@ const generateHTML = (object) => `
     <div class="card-body" data-id="${object.id}">
             <div class='card-body-info'>
                 <h2 class="card-title">${object.firstName}</h2>
-                <p class="card-number">${object.phoneNumber}</p>
-                <p class="card-text">${object.description}</p>
+                <p class="card-number"></p>
+                <p class="card-text"></p>
         </div>
         <div class="article-section-button">
                 <button type="button" class="open">Open card</button>
                 <button type="button" class="delete">Delete</button>
         </div>
     </div>
-</section > `;
+</section> `;
 
 const generateOpenCard = (object) => `
 <div class="modal-card">

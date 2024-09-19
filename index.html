@@ -29,73 +29,27 @@
             <button id="elem" type="button" class="btn-close" aria-label="Close"></button>
             <form id="form">
                 <div class="input">
-                    <h2 class="input-title">
-                        ID
-                    </h2>
-                    <div class="input-group mb-3">
-                        <input name='id' type="text" class="form-control">
-                    </div>
-                </div>
-                <div class="input">
-                    <h2 class="input-title">
+                    <label for='input-firstName' class="input-title">
                         Name
-                    </h2>
-                    <div class="input-group mb-3">
-                        <input name='firstName' type="text" class="form-control" required placeholder="Danil" >
-                    </div>
-                </div>
-                <div class="input">
-                    <h2 class="input-title">
-                        Surname
-                    </h2>
-                    <div class="input-group mb-3">
-                        <input name='lastName' type="text" class="form-control" required placeholder="Kim">
-                    </div>
-                </div>
-                <div class="input">
-                    <h2 class="input-title">
-                        Nickname
-                    </h2>
-                    <div class="input-group mb-3">
-                        <input name='nickName' type="text" class="form-control" placeholder="kimchanskiy">
-                    </div>
-                </div>
-                <div class="input">
-                    <h2 class="input-title">
-                        Number
-                    </h2>
-                    <div class="input-group mb-3">
-                        <input name='phoneNumber' type="text" class="form-control" placeholder="+79777777777">
-                    </div>
-                </div>
-                <div class="input">
-                    <h2 class="input-title">
-                        E-mail
-                    </h2>
-                    <div class="input-group mb-3">
-                        <input name='email' type="text" class="form-control" required placeholder="kim@gmail.com">
-                    </div>
-                </div>
-                <div class="input">
-                    <label for='description' class="input-title">
-                        Description
                     </label>
                     <div class="input-group mb-3">
-                        <textarea name='description' type="text" class="form-control textarea"></textarea>
-                    </div>
-                    <div class="form-check">
-                        <input name='favourite' class="form-check-input" type="checkbox" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Favourite
-                        </label>
+                        <input name='firstName' id='input-firstName' type="text" class="form-control" required placeholder="Danil" >
                     </div>
                 </div>
                 <div class="input">
-                    <h2 class="input-title picture">
-                        Picture link
-                    </h2>
+                    <label for='input-lastName' class="input-title">
+                        Name
+                    </label>
                     <div class="input-group mb-3">
-                        <input name='avatar' type="text" class="form-control">
+                        <input name='lastName' id='input-lastName' type="text" class="form-control" required placeholder="Kim">
+                    </div>
+                </div>
+                <div class="input">
+                    <label for='input-email' class="input-title">
+                        E-mail
+                    </label>
+                    <div class="input-group mb-3">
+                        <input name='email' id='input-email' type="text" class="form-control" required placeholder="kim@gmail.com">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -109,62 +63,78 @@
             <button id="elem" type="button" class="btn-close close-editor" aria-label="Close"></button>
             <form id="form-edit">
                 <div class="input">
-                    <h2 class="input-title">
+                    <label for='input-id' class="input-title">
                         ID
-                    </h2>
+                    </label>
                     <div class="input-group mb-3">
-                        <input name='id' type="text" readonly class="form-control">
+                        <input name='id' id='input-id' type="text" readonly class="form-control">
                     </div>
                 </div>
                 <div class="input">
-                    <h2 class="input-title">
+                    <label for='edit-firstName' class="input-title">
                         Name
-                    </h2>
+                    </label>
                     <div class="input-group mb-3">
-                        <input name='name' type="text" class="form-control" required placeholder="Иван"
+                        <input name='firstName' id="edit-firstName" type="text" class="form-control" required placeholder="Иван"
                             aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="input">
-                    <h2 class="input-title">
+                    <label for='edit-lastName' class="input-title">
                         Surname
-                    </h2>
+                    </label>
                     <div class="input-group mb-3">
-                        <input name='surname' type="text" class="form-control" placeholder="Иванов"
+                        <input name='lastName' id='edit-lastName' type="text" class="form-control" placeholder="Иванов"
                             aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="input">
-                    <h2 class="input-title">
-                        Number
-                    </h2>
+                    <label for='edit-email' class="input-title">
+                        E-mail
+                    </label>
                     <div class="input-group mb-3">
-                        <input name='number' type="text" class="form-control" required
-                            placeholder="+79777777777" aria-label="Username" aria-describedby="basic-addon1">
+                        <input name='email' id="edit-email" type="text" class="form-control" required
+                            placeholder="kim@gmail.com" aria-label="Username" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="input">
-                    <label for='description' class="input-title">
+                    <label for='edit-nickName' class="input-title">
+                        Nickname
+                    </label>
+                    <div class="input-group mb-3">
+                        <input name='nickName' id='edit-nickName' type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="input">
+                    <label for='edit-description' class="input-title">
                         Description
                     </label>
                     <div class="input-group mb-3">
-                        <textarea name='description' type="text" class="form-control textarea"></textarea>
+                        <textarea name='description' id="edit-description" type="text" class="form-control textarea"></textarea>
                     </div>
                     <div class="form-check">
-                        <input name='favourite' class="form-check-input" type="checkbox"
-                            id="flexCheckDefault">
+                        <input name='favourite' class="form-check-input" type="checkbox" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             Favourite
                         </label>
                     </div>
                 </div>
                 <div class="input">
-                    <h2 class="input-title picture">
-                        Picture link
-                    </h2>
+                    <label for='edit-avatar' class="input-title">
+                        Avatar link
+                    </label>
                     <div class="input-group mb-3">
-                        <input name='picture_link' type="text" class="form-control" 
-                            aria-label="Username" aria-describedby="basic-addon1">
+                        <input name='avatar' id="edit-avatar" type="text" class="form-control" aria-label="Username"
+                            aria-describedby="basic-addon1">
+                    </div>
+                </div>
+                <div class="input">
+                    <label for='edit-phoneNumber' class="input-title">
+                        Phone Number
+                    </label>
+                    <div class="input-group mb-3">
+                        <input name='phoneNumber' id="edit-phoneNumber" type="text" class="form-control" aria-label="Username"
+                            aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="modal-footer">
