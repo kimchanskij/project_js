@@ -101,9 +101,8 @@ $modal_close_button.addEventListener("click", () => {
 
 $add_button.addEventListener("click", () => {
     if (localStorage.length) {
-        const $inputs = document.querySelectorAll('.mymodal [name]');
         for (let i = 0; i < localStorage.length; i++) {
-            $inputs[i].value = localStorage.getItem(localStorage.key(i));
+            document.querySelector(`.mymodal [name='${localStorage.key(i)}']`).value = localStorage.getItem(localStorage.key(i));
         }
     }
     scrollBlock(true);
@@ -129,9 +128,9 @@ document.querySelector('#form').addEventListener('submit', (event) => {
         alert('Имя и фамилия должны состоять из букв!')
     }
     else {
-        localStorage.setItem('firstName', data.firstName);
-        localStorage.setItem('lastName', data.lastName);
         localStorage.setItem('email', data.email);
+        localStorage.setItem('lastName', data.lastName);
+        localStorage.setItem('firstName', data.firstName);
 
         postContact(data).then(() => {
             getAllContacts().then(result => {
