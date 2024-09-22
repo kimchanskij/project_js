@@ -100,6 +100,12 @@ $modal_close_button.addEventListener("click", () => {
 });
 
 $add_button.addEventListener("click", () => {
+    if (localStorage.length) {
+        const $inputs = document.querySelectorAll('.mymodal [name]');
+        for (let i = 0; i < localStorage.length; i++) {
+            $inputs[i].value = localStorage.getItem(localStorage.key(i));
+        }
+    }
     scrollBlock(true);
     $modal.style.display = "flex";
 });
@@ -119,10 +125,14 @@ document.querySelector('#form').addEventListener('submit', (event) => {
 
     data.avatar = 'https://i.pinimg.com/originals/ff/a0/9a/ffa09aec412db3f54deadf1b3781de2a.png';
 
-    if ((data.name && !regexpName.test(data.name)) || (data.lastName && !regexpName.test(data.lastName))) {
+    if ((data.firstName && !regexpName.test(data.firstName)) || (data.lastName && !regexpName.test(data.lastName))) {
         alert('Имя и фамилия должны состоять из букв!')
     }
     else {
+        localStorage.setItem('firstName', data.firstName);
+        localStorage.setItem('lastName', data.lastName);
+        localStorage.setItem('email', data.email);
+
         postContact(data).then(() => {
             getAllContacts().then(result => {
                 document.querySelector('.article').insertAdjacentHTML('beforeend', generateHTML(result[0]));
@@ -206,37 +216,59 @@ document.querySelector('#form-edit').addEventListener('submit', (event) => {
         data['favourite'] = false;
     }
 
-    if (!regexpNumber.test(data.phoneNumber)) {
-        alert('Поддерживаемые форматы: +79001014567, 79001014567, 89001014567');
-    }
-    else {
-        if ((data.firstName && !regexpName.test(data.firstName)) || (data.lastName && !regexpName.test(data.lastName))) {
-            alert('Имя и фамилия должны состоять из букв!')
+    if (data['phoneNumber']) {
+        if (!regexpNumber.test(data.phoneNumber)) {
+            alert('Поддерживаемые форматы: +79001014567, 79001014567, 89001014567');
         }
-        else {
 
-            const $modal_body = document.querySelector('.modal-editor-body');
-            // const item = array.find(item => item.id === document.querySelector('.modal-editor-body').dataset.id);
-            getContact($modal_body.dataset.id).then(contact => {
-                for (let value in data) {
-                    if (data[value] == contact[value]) {
-                        delete data[value];
+        else {
+            if ((data.firstName && !regexpName.test(data.firstName)) || (data.lastName && !regexpName.test(data.lastName))) {
+                alert('Имя и фамилия должны состоять из букв!')
+            }
+
+            else {
+
+                const $modal_body = document.querySelector('.modal-editor-body');
+                // const item = array.find(item => item.id === document.querySelector('.modal-editor-body').dataset.id);
+                getContact($modal_body.dataset.id).then(contact => {
+                    for (let value in data) {
+                        if (data[value] == contact[value]) {
+                            delete data[value];
+                        }
                     }
-                }
-                console.log($modal_body.dataset.id, data);
-                updateContact($modal_body.dataset.id, data).then(() => {
-                    const $card = document.querySelector(`.card-body[data-id='${contact.id}']`);
-                    if (data['avatar']) $card.previousElementSibling.src = data['avatar'];
-                    $card.firstElementChild.innerHTML = `<h2 class='card-title'>${contact.firstName}</h2>
-                                         <p class='card-number'>${contact.phoneNumber}</p>
-                                         <p class='card-text'>${contact.description}</p>`
-                    scrollBlock(false);
-                    $modal_editor.style.display = 'none';
+                    if (Object.keys(data).length) {
+                        if (!data['firstName']) {
+                            data['firstName'] = contact['firstName'];
+                        }
+                        if (!data['lastName']) {
+                            data['lastName'] = contact['lastName'];
+                        }
+                        if (!data['email']) {
+                            data['email'] = contact['email'];
+                        }
+                        updateContact($modal_body.dataset.id, data).then(() => {
+                            const $card = document.querySelector(`.card-body[data-id='${contact.id}']`);
+                            if (data['avatar'] !== undefined) $card.previousElementSibling.src = data['avatar'];
+                            if (data['firstName'] !== undefined) $card.firstElementChild.children[0].innerHTML = data.firstName;
+
+                            if (data['phoneNumber'] !== undefined) $card.firstElementChild.children[1].innerHTML = data['phoneNumber'];
+
+                            if (data['description'] !== undefined) $card.firstElementChild.children[2].innerHTML = data['description'];
+
+                            scrollBlock(false);
+                            $modal_editor.style.display = 'none';
+                        })
+                    }
+                    else {
+                        scrollBlock(false);
+                        $modal_editor.style.display = 'none';
+                    }
                 })
-            })
+            }
         }
     }
 })
+// }
 
 const generateHTML = (object) => `
 <section class="mycard">
@@ -244,8 +276,8 @@ const generateHTML = (object) => `
     <div class="card-body" data-id="${object.id}">
             <div class='card-body-info'>
                 <h2 class="card-title">${object.firstName}</h2>
-                <p class="card-number"></p>
-                <p class="card-text"></p>
+                <p class="card-number">${object.phoneNumber}</p>
+                <p class="card-text">${object.description}</p>
         </div>
         <div class="article-section-button">
                 <button type="button" class="open">Open card</button>
@@ -273,7 +305,10 @@ const generateOpenCard = (object) => `
                 Surname: ${object.lastName}
             </p>
             <p class='modal-card-text'>
-                Number: ${object.phoneNumber}
+                E-mail: ${object.email}
+            </p>
+            <p class='modal-card-text'>
+                Nickname: ${object.nickName}
             </p>
             <p class='modal-card-text'>
                 Description: ${object.description}
@@ -282,9 +317,14 @@ const generateOpenCard = (object) => `
                 Favourite: ${object.favourite}
             </p>
             <p class='modal-card-text'>
-                Picture link: ${object.avatar}
+                Avatar link: ${object.avatar}
+            </p>
+            <p class='modal-card-text'>
+                Phone Number: ${object.phoneNumber}
+            </p>
         </div>
-        </div>
+    </div>
+    <div>
         <button type="button" class="btn btn-primary edit">Edit</button>
     </div>
 </div>`;
