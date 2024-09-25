@@ -95,6 +95,12 @@ function scrollBlock(isBlock) {
 }
 
 $modal_close_button.addEventListener("click", () => {
+    const $inputs = document.querySelectorAll(`.mymodal [name]`);
+
+    $inputs.forEach(item => {
+        localStorage.setItem(item.name, item.value);
+    })
+
     scrollBlock(false);
     document.querySelector('.mymodal').style.display = "none";
 });
@@ -113,6 +119,13 @@ $modal.addEventListener('mousedown', (event) => {
     if (event.target.className != 'mymodal') {
         return;
     }
+
+    const $inputs = document.querySelectorAll(`.mymodal [name]`);
+
+    $inputs.forEach(item => {
+        localStorage.setItem(item.name, item.value);
+    })
+
     scrollBlock(false);
     $modal.style.display = 'none';
 });
